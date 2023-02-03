@@ -1,6 +1,7 @@
 const express = require('express');
 const mogoose = require('mongoose');
 const app = express();
+const cors = require('cors');
 require("dotenv").config();
 
 // Importar conexión mongoDB
@@ -15,7 +16,9 @@ const { default: mongoose } = require('mongoose');
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:'true'}));
-res.set('Access-Control-Allow-Origin', '*');
+app.use(cors({
+    origin: 'https://arekku-tienda.onrender.com'
+}));
 
 app.use('/api', rutaProducto);
 
