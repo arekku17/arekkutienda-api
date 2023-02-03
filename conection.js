@@ -1,16 +1,9 @@
+require("dotenv").config();
+
 const mongoose = require('mongoose');
-let MONGODB_URI = process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/arekkutienda";
-
-console.log(process.env.MONGODB_URL);
-
-const options = {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    family: 4 // Use IPv4, skip trying IPv6
-  };
-
-mongoose.connect(MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch(error => console.error(error));
 mongoose.set('strictQuery', false);
 
 const objetobd = mongoose.connection;

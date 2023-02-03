@@ -1,7 +1,7 @@
 const express = require('express');
 const mogoose = require('mongoose');
 const app = express();
-
+require("dotenv").config();
 
 // Importar conexión mongoDB
 const archivoBD = require('./conection');

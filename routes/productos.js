@@ -3,13 +3,13 @@ const productoSchema = require('../models/producto');
 
 const router = express.Router();
 
-// Crear producto
-router.post('/producto', (req, res) => {
-    const product = productoSchema(req.body);
-    product.save()
-        .then((data) => res.json(data))
-        .catch((err) => res.json({ message: err }));
-});
+// // Crear producto
+// router.post('/producto', (req, res) => {
+//     const product = productoSchema(req.body);
+//     product.save()
+//         .then((data) => res.json(data))
+//         .catch((err) => res.json({ message: err }));
+// });
 
 
 // Obtener todos los productos
