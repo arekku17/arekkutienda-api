@@ -23,6 +23,6 @@ app.get('/', (req, res) => {
 })
 
 //Configurando server
-app.listen(5000, () => {
+app.listen(process.env.PORT || 5000, () => {
     console.log("El servidor está corriendo correctamente jejeje");
 })

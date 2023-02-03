@@ -1,5 +1,14 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/arekkutienda');
+let MONGODB_URI = process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/arekkutienda";
+
+const options = {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    family: 4 // Use IPv4, skip trying IPv6
+  };
+
+mongoose.connect(MONGODB_URI);
 mongoose.set('strictQuery', false);
 
 const objetobd = mongoose.connection;
