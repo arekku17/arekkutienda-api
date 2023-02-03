@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 let MONGODB_URI = process.env.MONGODB_URL || "mongodb://127.0.0.1:27017/arekkutienda";
 
+console.log(process.env.MONGODB_URL);
+
 const options = {
     useNewUrlParser: true,
     useCreateIndex: true,
