@@ -15,6 +15,7 @@ const { default: mongoose } = require('mongoose');
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:'true'}));
+res.set('Access-Control-Allow-Origin', '*');
 
 app.use('/api', rutaProducto);
 
