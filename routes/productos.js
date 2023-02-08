@@ -2,15 +2,25 @@ const express = require('express');
 const productoSchema = require('../models/producto');
 
 const router = express.Router();
+const authJwt = require('../src/middlewares/authJwt');
 
-// // Crear producto
-// router.post('/producto', (req, res) => {
-//     const product = productoSchema(req.body);
-//     product.save()
-//         .then((data) => res.json(data))
-//         .catch((err) => res.json({ message: err }));
-// });
 
+// Crear producto
+router.post('/producto', [authJwt.verifyToken, authJwt.isModerador], (req, res) => {
+    const product = productoSchema(req.body);
+    product.save()
+        .then((data) => res.json(data))
+        .catch((err) => res.json({ message: err }));
+});
+
+// Actualizar un producto
+router.put('/producto/:id', [authJwt.verifyToken, authJwt.isModerador], (req, res) => {
+    const { id } = req.params;
+    const { title, anime, img, price, stock } = req.body
+    productoSchema.updateOne({ idItem: id }, { $set: { title, anime, img, price, stock } })
+        .then((data) => res.json(data))
+        .catch((err) => res.json({ message: err }));
+});
 
 // Obtener todos los productos
 router.get('/producto', (req, res) => {
@@ -23,15 +33,6 @@ router.get('/producto', (req, res) => {
 router.get('/producto/:id', (req, res) => {
     const { id } = req.params;
     productoSchema.findOne({ idItem: id })
-        .then((data) => res.json(data))
-        .catch((err) => res.json({ message: err }));
-});
-
-// Actualizar un producto
-router.put('/producto/:id', (req, res) => {
-    const { id } = req.params;
-    const { title, anime, img, price, stock } = req.body
-    productoSchema.updateOne({ idItem: id }, { $set: { title, anime, img, price, stock } })
         .then((data) => res.json(data))
         .catch((err) => res.json({ message: err }));
 });
@@ -82,12 +83,12 @@ router.get('/listanimes', (req, res) => {
         .catch((err) => res.json({ message: err }));
 });
 
-// // Borrar un producto
-// router.delete('/producto/:id', (req, res) => {
-//     const { id } = req.params;
-//     productoSchema.remove({ idItem: id })
-//         .then((data) => res.json(data))
-//         .catch((err) => res.json({ message: err }));
-// });
+// Borrar un producto
+router.delete('/producto/:id', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
+    const { id } = req.params;
+    productoSchema.remove({ idItem: id })
+        .then((data) => res.json(data))
+        .catch((err) => res.json({ message: err }));
+});
 
 module.exports = router;
