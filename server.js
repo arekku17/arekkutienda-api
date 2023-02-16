@@ -40,5 +40,5 @@ app.get('/', (req, res) => {
 
 //Configurando server
 app.listen(process.env.PORT || 5000, () => {
-    console.log("El servidor está corriendo correctamente jejeje");
+    console.log("El servidor está corriendo correctamente uwu");
 })
