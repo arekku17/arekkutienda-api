@@ -25,7 +25,7 @@ router.post('/signUP', [verify.checkDuplicateUser, verify.checkRolesExisted], as
         const token = jwt.sign({id: data._id}, process.env.JWT_KEY, {
             expiresIn: 86400
         })
-        res.json({token})
+        res.json({token: token, user: data})
         
     })
     .catch((err) => {
@@ -52,7 +52,7 @@ router.post('/signin', async (req, res) => {
         expiresIn: 86400
     })
 
-    res.json({token})
+    res.json({token: token, user: userFound})
 
 })
 

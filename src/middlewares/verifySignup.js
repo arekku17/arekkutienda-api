@@ -4,10 +4,10 @@ const ROLES = ["user", "admin", "moderator"];
 
 const checkDuplicateUser = async (req, res, next) => {
     const userFound = await User.findOne({username: req.body.username});
-    if(userFound) return res.status(400).json({message: "Usuario ya existe"})
+    if(userFound) return res.status(400).json({message: "Usuario ya registrado"})
 
     const emailFound = await User.findOne({email: req.body.email});
-    if(emailFound) return res.status(400).json({message: "Email ya existe"})
+    if(emailFound) return res.status(400).json({message: "Email ya registrado"})
 
     next();
 }
