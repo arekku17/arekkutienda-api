@@ -16,6 +16,7 @@ const rutaProducto = require('./routes/productos');
 const rutaAuth = require('./routes/auth.routes');
 const rutaUser = require('./routes/user.routes');
 const rutaPedido = require('./routes/pedido.routes');
+const rutaImagen = require('./routes/imagen');
 
 //Importar body parser
 const bodyParser = require('body-parser');
@@ -31,6 +32,7 @@ app.use('/api', rutaProducto);
 app.use('/api/auth', rutaAuth);
 app.use('/api/users', rutaUser);
 app.use('/api/pedido', rutaPedido);
+app.use('/api/imagen', rutaImagen);
 
 initialSetup.createRoles();
 

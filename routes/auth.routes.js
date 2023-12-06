@@ -56,4 +56,33 @@ router.post('/signin', async (req, res) => {
 
 })
 
+router.post('/signin/admin', async (req, res) => {
+
+    const userFound = await userSchema.findOne({email: req.body.email}).populate("roles")
+
+    if(!userFound){
+        console.log("XD")
+        return res.status(400).json({error: "Usuario no registrado"}) 
+    }
+
+
+    if(userFound.roles.find(role => role.name === "admin")){
+        const matchPass = await userSchema.comparePassword(req.body.password, userFound.password);
+
+        if(!matchPass){
+            console.log("XD")
+            return res.status(400).json({token: null, error: "Contraseña incorrecta"}) 
+        }
+    
+        const token = jwt.sign({id: userFound._id}, process.env.JWT_KEY, {
+            expiresIn: 86400
+        })
+    
+        res.json({token: token, user: userFound})
+    }
+    else{
+        return res.status(403).json({error: "No es admin"})
+    }
+})
+
 module.exports = router;
