@@ -4,7 +4,7 @@ const authJwt = require('../src/middlewares/authJwt');
 const pedidoSchema = require('../models/pedido');
 
 // Crear pedido de producto
-router.post('/producto', [authJwt.verifyToken], (req, res) => {
+router.post('/producto', [authJwt.verifyToken], async (req, res) => {
     const newPedido = new pedidoSchema(req.body);
     newPedido.save()
         .then((data) => res.status(200).json(data))

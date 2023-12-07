@@ -5,8 +5,7 @@ const { uploadS3 } = require('../src/libs/setupS3');
 
 
 router.post("/upload", [authJwt.verifyToken, authJwt.isAdmin, uploadS3.single('image')], (req, res) => {
-    console.log(req)
-    
+
     const {
         key, //Nombre guardado en el bucket
         location //URL de la imágen guardada en el bucket

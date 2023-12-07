@@ -35,6 +35,7 @@ app.use('/api/pedido', rutaPedido);
 app.use('/api/imagen', rutaImagen);
 
 initialSetup.createRoles();
+initialSetup.createIndex();
 
 app.get('/', (req, res) => {
     res.end("Sevidor arekku tienda")

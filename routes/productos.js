@@ -4,13 +4,50 @@ const productoSchema = require('../models/producto');
 const router = express.Router();
 const authJwt = require('../src/middlewares/authJwt');
 
+const indexSchema = require('../models/Indice');
+
 
 // Crear producto
-router.post('/producto', [authJwt.verifyToken, authJwt.isModerador], (req, res) => {
+router.post('/producto', [authJwt.verifyToken, authJwt.isModerador], async (req, res) => {
+    const tipo = req.body.tipo;
+
+    let sufijo = "";
+
+    switch (tipo) {
+        case "playera":
+            sufijo = "PL"
+            break;
+        case "sudadera":
+            sufijo = "SD"
+            break;
+        case "llavero":
+            sufijo = "LL"
+            break;
+        case "poster":
+            sufijo = "PO"
+            break;
+        case "pin":
+            sufijo = "PI"
+            break;
+        default:
+            break;
+    }
+
+    const indiceProductos = await indexSchema.findOne({name: sufijo})
+
+    // Incrementar el conteo
+    indiceProductos.count += 1;
+
+    // Guardar el cambio en la base de datos
+    await indiceProductos.save();
+
+    req.body.idItem = `${sufijo}-${(indiceProductos.count)}`
+
+
     const product = productoSchema(req.body);
     product.save()
         .then((data) => res.json(data))
-        .catch((err) => res.json({ message: err }));
+        .catch((err) => res.status(403).json({ message: err }));
 });
 
 // Actualizar un producto
