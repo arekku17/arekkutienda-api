@@ -23,7 +23,8 @@ const productoSchema = mongoose.Schema({
     },
     idItem: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     tallas: {
         type: Array
@@ -32,6 +33,10 @@ const productoSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    eliminado: {
+        type: Boolean,
+        default: false
+    }
 },  { timestamps: true });
 
 module.exports = mongoose.model("Producto", productoSchema);
